@@ -32,35 +32,33 @@ footer { text-align:center; margin-top:20px; font-size:14px; color:#888; }
 
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
-  // ✅ Your Google Apps Script Web App URL
-  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby1lqvNu-o9PzkYcZrFC5ZF9zePegdY3lOYfwuQEglmcw7nASfZa6TU1vWo0FlY4-JpTA/exec';
   const tableBody = document.querySelector('#checkinTable tbody');
 
   async function loadCheckins(){
-    try{
-      const res = await fetch(BACKEND_URL);
-      const data = await res.json();
-      tableBody.innerHTML='';
-      data.forEach(row=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML=`
-          <td>${row.Timestamp}</td>
-          <td>${row.Name}</td>
-          <td>${row.Email}</td>
-          <td>${row.Phone}</td>
-          <td>${row['Person to See']}</td>
-          <td>${row.Reason}</td>
-          <td>${row.Status}</td>
-        `;
-        tableBody.appendChild(tr);
-      });
-    }catch(err){
-      console.error('Error loading check-ins:', err);
+    try {
+      const res = await google.script.run.withSuccessHandler(data=>{
+        tableBody.innerHTML='';
+        data.forEach(row=>{
+          const tr = document.createElement('tr');
+          tr.innerHTML=`
+            <td>${row.Timestamp}</td>
+            <td>${row.Name}</td>
+            <td>${row.Email}</td>
+            <td>${row.Phone}</td>
+            <td>${row['Person to See']}</td>
+            <td>${row.Reason}</td>
+            <td>${row.Status}</td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      }).getCheckins();
+    } catch(err) {
+      console.error(err);
     }
   }
 
   loadCheckins();
-  setInterval(loadCheckins,5000); // refresh every 5 seconds
+  setInterval(loadCheckins, 5000);
 });
 </script>
 </body>
