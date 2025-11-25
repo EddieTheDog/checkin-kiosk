@@ -5,24 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Check-In Admin</title>
 <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #fff;
-    margin: 20px;
-  }
-  h1 { text-align: center; margin-bottom: 20px; }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 12px; border: 1px solid #ccc; text-align: left; }
-  button {
-    padding: 6px 12px;
-    margin: 2px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  .accept { background-color: #28a745; color: white; }
-  .decline { background-color: #dc3545; color: white; }
-  .done { background-color: #007aff; color: white; }
+  body { font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:#fff; margin:20px; }
+  h1 { text-align:center; margin-bottom:20px; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { padding:12px; border:1px solid #ccc; text-align:left; }
 </style>
 </head>
 <body>
@@ -44,7 +30,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const BACKEND_URL = 'YOUR_WEB_APP_URL_HERE';
+  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby1lqvNu-o9PzkYcZrFC5ZF9zePegdY3lOYfwuQEglmcw7nASfZa6TU1vWo0FlY4-JpTA/exec';
   const tableBody = document.querySelector('#checkinTable tbody');
 
   async function loadCheckins() {
@@ -52,9 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch(BACKEND_URL);
       const data = await res.json();
       tableBody.innerHTML = '';
-      data.forEach(row => {
+      data.forEach(row=>{
         const tr = document.createElement('tr');
-        tr.innerHTML = `
+        tr.innerHTML=`
           <td>${row.Timestamp}</td>
           <td>${row.Name}</td>
           <td>${row.Email}</td>
@@ -65,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         tableBody.appendChild(tr);
       });
-    } catch (err) {
+    } catch(err){
       console.error('Error loading check-ins:', err);
     }
   }
 
   loadCheckins();
-  setInterval(loadCheckins, 5000); // Refresh every 5s.
+  setInterval(loadCheckins, 5000); // Refresh every 5 seconds
 });
 </script>
 </body>
