@@ -33,9 +33,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const form = document.getElementById('checkinForm');
   const success = document.getElementById('success');
 
-  // ✅ Your Google Apps Script Web App URL
-  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby1lqvNu-o9PzkYcZrFC5ZF9zePegdY3lOYfwuQEglmcw7nASfZa6TU1vWo0FlY4-JpTA/exec';
-
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const data = {
@@ -45,20 +42,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
       person: form.person.value,
       reason: form.reason.value
     };
-    try{
-      await fetch(BACKEND_URL,{
+    try {
+      const res = await fetch('', { // empty string = same origin Apps Script
         method:'POST',
-        body:JSON.stringify(data),
+        body: JSON.stringify(data),
         headers:{'Content-Type':'application/json'}
       });
-      form.style.display='none';
-      success.style.display='block';
-      setTimeout(()=>{
-        form.reset();
-        form.style.display='flex';
-        success.style.display='none';
-      },4000);
-    }catch(err){
+      const json = await res.json();
+      if (json.status === 'success') {
+        form.style.display='none';
+        success.style.display='block';
+        setTimeout(()=>{
+          form.reset();
+          form.style.display='flex';
+          success.style.display='none';
+        },4000);
+      } else {
+        alert('Error: ' + json.message);
+      }
+    } catch(err) {
       alert('Error submitting check-in. Please try again.');
       console.error(err);
     }
