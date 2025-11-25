@@ -58,38 +58,40 @@
 <div id="success">Thank you! You are checked in.</div>
 
 <script>
-const form = document.getElementById('checkinForm');
-const success = document.getElementById('success');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('checkinForm');
+  const success = document.getElementById('success');
 
-// ✅ Your Google Apps Script Web App URL.
-const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwkOAks_EBjSWuQMcAIcTkYxqb9Ue40xjRfodnX7EmVuyubYFixAE7wGW27SWzawzOkvw/exec';
+  // ✅ Your deployed Web App URL
+  const BACKEND_URL = 'YOUR_WEB_APP_URL_HERE';
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = {
-    name: form.name.value,
-    email: form.email.value,
-    phone: form.phone.value,
-    person: form.person.value,
-    reason: form.reason.value
-  };
-  try {
-    await fetch(BACKEND_URL, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    form.style.display = 'none';
-    success.style.display = 'block';
-    setTimeout(() => {
-      form.reset();
-      form.style.display = 'flex';
-      success.style.display = 'none';
-    }, 4000);
-  } catch (err) {
-    alert('Error submitting check-in. Please try again.');
-    console.error(err);
-  }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      person: form.person.value,
+      reason: form.reason.value
+    };
+    try {
+      await fetch(BACKEND_URL, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      form.style.display = 'none';
+      success.style.display = 'block';
+      setTimeout(() => {
+        form.reset();
+        form.style.display = 'flex';
+        success.style.display = 'none';
+      }, 4000);
+    } catch (err) {
+      alert('Error submitting check-in. Please try again.');
+      console.error(err);
+    }
+  });
 });
 </script>
 </body>
