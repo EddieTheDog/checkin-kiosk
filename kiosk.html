@@ -26,7 +26,7 @@ footer { text-align:center; margin-top:20px; font-size:14px; color:#888; }
   <button type="submit">Check In</button>
 </form>
 <div id="success">Thank you! You are checked in.</div>
-<footer>Version 1.0.0</footer>
+<footer>Version 1.1.0</footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       reason: form.reason.value
     };
     try {
-      const res = await fetch('', { // empty string = same origin Apps Script
+      const res = await fetch('', {
         method:'POST',
         body: JSON.stringify(data),
         headers:{'Content-Type':'application/json'}
