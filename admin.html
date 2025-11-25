@@ -28,33 +28,29 @@ footer { text-align:center; margin-top:20px; font-size:14px; color:#888; }
   </thead>
   <tbody></tbody>
 </table>
-<footer>Version 1.0.0</footer>
+<footer>Version 1.0.1</footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
   const tableBody = document.querySelector('#checkinTable tbody');
 
   async function loadCheckins(){
-    try {
-      const res = await google.script.run.withSuccessHandler(data=>{
-        tableBody.innerHTML='';
-        data.forEach(row=>{
-          const tr = document.createElement('tr');
-          tr.innerHTML=`
-            <td>${row.Timestamp}</td>
-            <td>${row.Name}</td>
-            <td>${row.Email}</td>
-            <td>${row.Phone}</td>
-            <td>${row['Person to See']}</td>
-            <td>${row.Reason}</td>
-            <td>${row.Status}</td>
-          `;
-          tableBody.appendChild(tr);
-        });
-      }).getCheckins();
-    } catch(err) {
-      console.error(err);
-    }
+    google.script.run.withSuccessHandler(data=>{
+      tableBody.innerHTML='';
+      data.forEach(row=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML=`
+          <td>${row.Timestamp}</td>
+          <td>${row.Name}</td>
+          <td>${row.Email}</td>
+          <td>${row.Phone}</td>
+          <td>${row['Person to See']}</td>
+          <td>${row.Reason}</td>
+          <td>${row.Status}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }).getCheckins();
   }
 
   loadCheckins();
