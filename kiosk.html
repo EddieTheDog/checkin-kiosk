@@ -5,44 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Check-In Kiosk</title>
 <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
-  h1 { color: #222; margin-bottom: 20px; }
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    max-width: 400px;
-  }
-  input, textarea, button {
-    padding: 12px;
-    margin: 8px 0;
-    font-size: 18px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  button {
-    background-color: #007aff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  button:hover { background-color: #005bb5; }
-  #success {
-    display: none;
-    font-size: 24px;
-    color: green;
-    text-align: center;
-    margin-top: 20px;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #fff; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; margin:0; }
+  h1 { color:#222; margin-bottom:20px; }
+  form { display:flex; flex-direction:column; width:90%; max-width:400px; }
+  input, textarea, button { padding:12px; margin:8px 0; font-size:18px; border-radius:8px; border:1px solid #ccc; }
+  button { background-color:#007aff; color:white; border:none; cursor:pointer; }
+  button:hover { background-color:#005bb5; }
+  #success { display:none; font-size:24px; color:green; text-align:center; margin-top:20px; }
 </style>
 </head>
 <body>
@@ -61,9 +30,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('checkinForm');
   const success = document.getElementById('success');
-
-  // ✅ Your deployed Web App URL
-  const BACKEND_URL = 'YOUR_WEB_APP_URL_HERE';
+  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycby1lqvNu-o9PzkYcZrFC5ZF9zePegdY3lOYfwuQEglmcw7nASfZa6TU1vWo0FlY4-JpTA/exec';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -76,18 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     try {
       await fetch(BACKEND_URL, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
+        method:'POST',
+        body:JSON.stringify(data),
+        headers:{'Content-Type':'application/json'}
       });
-      form.style.display = 'none';
-      success.style.display = 'block';
-      setTimeout(() => {
+      form.style.display='none';
+      success.style.display='block';
+      setTimeout(()=>{
         form.reset();
-        form.style.display = 'flex';
-        success.style.display = 'none';
-      }, 4000);
-    } catch (err) {
+        form.style.display='flex';
+        success.style.display='none';
+      },4000);
+    } catch(err) {
       alert('Error submitting check-in. Please try again.');
       console.error(err);
     }
